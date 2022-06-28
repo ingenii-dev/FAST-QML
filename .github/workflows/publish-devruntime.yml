@@ -2,12 +2,12 @@ name: Publish Development Docker
 
 on:
   schedule:
-    # Publish a weekly new image to capture any updates from Pulumi and other libraries.
+    # Publish a weekly new image to capture any updates from libraries.
     - cron: "0 1 * * 0" # every Sunday at 1am
   push:
     # Publish a new image whenever changes detected in main.
-    branches:
-      - main
+    # branches:
+    #   - main
     # paths:
     #   - ".devcontainer/**"
     #   - "requirements.txt"
