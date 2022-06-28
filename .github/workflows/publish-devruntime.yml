@@ -6,11 +6,11 @@ on:
     - cron: "0 1 * * 0" # every Sunday at 1am
   push:
     # Publish a new image whenever changes detected in main.
-    # branches:
-    #   - main
-    # paths:
-    #   - ".devcontainer/**"
-    #   - "requirements.txt"
+    branches:
+      - main
+    paths:
+      - ".devcontainer/**"
+      - "requirements.txt"
   workflow_dispatch:
 
 env:
