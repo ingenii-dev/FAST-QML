@@ -1,58 +1,93 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
-// https://github.com/microsoft/vscode-dev-containers/tree/v0.238.0/containers/python-3
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.177.0/containers/python-3
 {
-	"name": "Python 3",
-	"build": {
-		"dockerfile": "Dockerfile",
-		"context": "..",
-		"args": { 
-			// Update 'VARIANT' to pick a Python version: 3, 3.10, 3.9, 3.8, 3.7, 3.6
-			// Append -bullseye or -buster to pin to an OS version.
-			// Use -bullseye variants on local on arm64/Apple Silicon.
-			"VARIANT": "3.10-bullseye",
-			// Options
-			"NODE_VERSION": "lts/*"
-		}
-	},
-
-	// Configure tool-specific properties.
-	"customizations": {
-		// Configure properties specific to VS Code.
-		"vscode": {
-			// Set *default* container specific settings.json values on container create.
-			"settings": { 
-				"python.defaultInterpreterPath": "/usr/local/bin/python",
-				"python.linting.enabled": true,
-				"python.linting.pylintEnabled": true,
-				"python.formatting.autopep8Path": "/usr/local/py-utils/bin/autopep8",
-				"python.formatting.blackPath": "/usr/local/py-utils/bin/black",
-				"python.formatting.yapfPath": "/usr/local/py-utils/bin/yapf",
-				"python.linting.banditPath": "/usr/local/py-utils/bin/bandit",
-				"python.linting.flake8Path": "/usr/local/py-utils/bin/flake8",
-				"python.linting.mypyPath": "/usr/local/py-utils/bin/mypy",
-				"python.linting.pycodestylePath": "/usr/local/py-utils/bin/pycodestyle",
-				"python.linting.pydocstylePath": "/usr/local/py-utils/bin/pydocstyle",
-				"python.linting.pylintPath": "/usr/local/py-utils/bin/pylint"
-			},
-			
-			// Add the IDs of extensions you want installed when the container is created.
-			"extensions": [
-				"ms-python.python",
-				"ms-python.vscode-pylance"
-			]
-		}
-	},
-
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
-
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "pip3 install --user -r requirements.txt",
-
-	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-	"remoteUser": "vscode",
-	"features": {
-		"azure-cli": "latest",
-		"jupyterlab": "latest"
-	}
-}
+    "name": "Python 3 + ML Libraries",
+    "dockerComposeFile": [
+      "docker-compose.yml"
+    ],
+    "service": "qmldev",
+    "shutdownAction": "none",
+    "workspaceFolder": "/workspace",
+    // Set *default* container specific settings.json values on container create.
+    "settings": {
+      "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+      },
+      "editor.formatOnSave": true,
+      "editor.tabSize": 2,
+      "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact"
+      ],
+      "files.eol": "\n",
+      "githubIssues.issueBranchTitle": "${user}/${issueNumber}_${sanitizedIssueTitle}",
+      "python.pythonPath": "/workspaces/ingenii-ui/infra/app/venv/bin/python",
+      "python.languageServer": "Pylance",
+      "python.linting.enabled": true,
+      "python.linting.pylintEnabled": true,
+      "python.formatting.autopep8Path": "/usr/local/py-utils/bin/autopep8",
+      "python.formatting.blackPath": "/usr/local/py-utils/bin/black",
+      "python.formatting.yapfPath": "/usr/local/py-utils/bin/yapf",
+      "python.linting.banditPath": "/usr/local/py-utils/bin/bandit",
+      "python.linting.flake8Path": "/usr/local/py-utils/bin/flake8",
+      "python.linting.mypyPath": "/usr/local/py-utils/bin/mypy",
+      "python.linting.pycodestylePath": "/usr/local/py-utils/bin/pycodestyle",
+      "python.linting.pydocstylePath": "/usr/local/py-utils/bin/pydocstyle",
+      "python.linting.pylintPath": "/usr/local/py-utils/bin/pylint",
+      "python.analysis.extraPaths": [
+        "backend/api",
+        "backend/infra",
+        "backend/src"
+      ],
+      "remote.extensionKind": {
+        "ms-azuretools.vscode-docker": "workspace"
+      },
+    },
+    // Add the IDs of extensions you want installed when the container is created.
+    "extensions": [
+      "bierner.color-info", // JSX and CSS color information
+      "christian-kohler.npm-intellisense", // Autocompletes npm modules in import statements
+      //"cssho.vscode-svgviewer", // SVG viewer
+      "davidanson.vscode-markdownlint",
+      "dbaeumer.vscode-eslint", // ESLint
+      "eamodio.gitlens", // IDE Git information
+      "ecmel.vscode-html-css", // CSS Intellisense for HTML
+      "eg2.vscode-npm-script", // NPM support for VS code
+      "esbenp.prettier-vscode", // Prettier code formatter
+      "github.vscode-pull-request-github", // Github interaction
+      "gruntfuggly.todo-tree", // Highlights TODO comments
+      //"hediet.vscode-drawio",
+      "IBM.output-colorizer", // Colorize your output/test logs
+      "jpoissonnier.vscode-styled-components", // Styled components
+      "mhutchie.git-graph",
+      "ms-azuretools.vscode-azurefunctions", // Azure functions tools
+      "ms-azuretools.vscode-docker", // Docker integration and linting
+      "ms-python.python",
+      "ms-python.vscode-pylance",
+      "ms-vscode-remote.remote-containers",
+      "ms-vscode.azure-account",
+      "oderwat.indent-rainbow", // Different colors for indentation layers
+      "streetsidesoftware.code-spell-checker", // Code spell checker
+      "shardulm94.trailing-spaces", // Show trailing spaces
+      "shd101wyy.markdown-preview-enhanced",
+      "stkb.rewrap", // rewrap comments after n characters on one line
+      "visualstudioexptteam.vscodeintellicode", // AI-assisted development
+      "vscode-icons-team.vscode-icons", // Better file extension icons
+      "yzhang.markdown-all-in-one",
+    ],
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    "forwardPorts": [
+      80,
+      443,
+      3000,
+      5432,
+      8000
+    ],
+    // Use 'postCreateCommand' to run commands after the container is created.
+    //"postCreateCommand": "make init",
+    //"postStartCommand": "make start",
+    // Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+    "remoteUser": "vscode"
+  }

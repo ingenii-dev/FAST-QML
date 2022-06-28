@@ -1,0 +1,28 @@
+services:
+  qmldev:
+    container_name: qmldev
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile.local
+      args:
+        # [Choice] Python version: 3, 3.8, 3.7, 3.6
+        VARIANT: 3
+        # [Choice] Node.js version: none, lts/*, 16, 14, 12, 10
+        #NODE_VERSION: "lts/*"
+        # On Linux, you may need to update USER_UID and USER_GID below if not your local UID is not 1000.
+        USER_UID: 1000
+        USER_GID: 1000
+    # env_file: .env
+    # ports:
+    #   - "3000:3000"
+    #   - "8000:8000"
+    volumes:
+      - ..:/workspace:cached
+    # Overrides default command so things don't shut down after the process ends.
+    command: sleep infinity
+    dns:
+      - 8.8.8.8
+    # Uncomment the next line to use a non-root user for all processes.
+    # user: vscode
+    # Use "forwardPorts" in **devcontainer.json** to forward an app port locally.
+    # (Adding the "ports" property to this file will not forward from a Codespace.)

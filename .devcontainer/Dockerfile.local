@@ -1,0 +1,7 @@
+# This is the Docker file which will be built locally with Docker Compose, and pulls down the
+# prebuilt image in Docker Hub:
+# https://hub.docker.com/repository/docker/ingeniisolutions/dataminedev-runtime
+#
+# If you need to extend this image during development use this file for any temporary local changes.
+
+FROM ingeniisolutions/dataminedev-runtime:latest
