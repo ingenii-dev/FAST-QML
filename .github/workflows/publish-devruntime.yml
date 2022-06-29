@@ -8,9 +8,9 @@ on:
     # Publish a new image whenever changes detected in main.
     branches:
       - main
-    paths:
-      - ".devcontainer/**"
-      - "requirements.txt"
+    # paths:
+    #   - ".devcontainer/**"
+    #   - "requirements.txt"
   workflow_dispatch:
 
 env:
