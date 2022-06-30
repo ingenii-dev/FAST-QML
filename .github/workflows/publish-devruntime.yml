@@ -8,7 +8,7 @@ on:
     # Publish a new image whenever changes detected in main.
     branches:
       - master
-    # paths:
+    paths:
       - ".devcontainer/**"
       - "installers/**"
       - "requirements.txt"
