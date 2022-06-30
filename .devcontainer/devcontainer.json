@@ -47,18 +47,11 @@
     },
     // Add the IDs of extensions you want installed when the container is created.
     "extensions": [
-      "bierner.color-info", // JSX and CSS color information
-      "christian-kohler.npm-intellisense", // Autocompletes npm modules in import statements
-      //"cssho.vscode-svgviewer", // SVG viewer
       "davidanson.vscode-markdownlint",
-      "dbaeumer.vscode-eslint", // ESLint
       "eamodio.gitlens", // IDE Git information
-      "ecmel.vscode-html-css", // CSS Intellisense for HTML
-      "eg2.vscode-npm-script", // NPM support for VS code
       "esbenp.prettier-vscode", // Prettier code formatter
       "github.vscode-pull-request-github", // Github interaction
       "gruntfuggly.todo-tree", // Highlights TODO comments
-      //"hediet.vscode-drawio",
       "IBM.output-colorizer", // Colorize your output/test logs
       "jpoissonnier.vscode-styled-components", // Styled components
       "mhutchie.git-graph",

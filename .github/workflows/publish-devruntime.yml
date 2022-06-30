@@ -9,8 +9,9 @@ on:
     branches:
       - master
     # paths:
-    #   - ".devcontainer/**"
-    #   - "requirements.txt"
+      - ".devcontainer/**"
+      - "installers/**"
+      - "requirements.txt"
   workflow_dispatch:
 
 env:
