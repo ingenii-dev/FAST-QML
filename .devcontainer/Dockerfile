@@ -8,8 +8,6 @@ FROM mcr.microsoft.com/vscode/devcontainers/python:0-${VARIANT}
 ARG NODE_VERSION="none"
 RUN if [ "${NODE_VERSION}" != "none" ]; then su vscode -c "umask 0002 && . /usr/local/share/nvm/nvm.sh && nvm install ${NODE_VERSION} 2>&1"; fi
 
-COPY requirements.txt /tmp/pip/
-COPY installers /tmp/installers/
 # Upgrade core OS and pip.
 RUN apt update && export DEBIAN_FRONTEND=noninteractive && apt upgrade -y && pip3 install --upgrade pip
 # If more packages needed add this line:
@@ -20,9 +18,11 @@ RUN apt update && export DEBIAN_FRONTEND=noninteractive && apt upgrade -y && pip
 #
 # Note: for local dev env we install CPU only PyTorch, for deployments we need to use a different
 # requirements.txt which has CUDA extras. See: https://pytorch.org/get-started/locally/
+COPY requirements.txt /tmp/pip/
 RUN (for line in $(cat /tmp/pip/requirements.txt); do \
     sudo -u vscode pip3 --disable-pip-version-check --no-cache-dir install ${line}; \
-    done) && rm -rf /tmp/pip-tmp
+    done) && rm -rf /tmp/pip
 
 # Do the individual installers which have specific methods.
+COPY installers /tmp/installers/
 RUN sh /tmp/installers/chimera.sh && rm -rf /tmp/installers
