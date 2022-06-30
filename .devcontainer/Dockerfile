@@ -8,16 +8,21 @@ FROM mcr.microsoft.com/vscode/devcontainers/python:0-${VARIANT}
 ARG NODE_VERSION="none"
 RUN if [ "${NODE_VERSION}" != "none" ]; then su vscode -c "umask 0002 && . /usr/local/share/nvm/nvm.sh && nvm install ${NODE_VERSION} 2>&1"; fi
 
-COPY requirements.txt /tmp/pip-tmp/
+COPY requirements.txt /tmp/pip/
 COPY installers /tmp/installers/
-# Install additional OS packages.
+# Upgrade core OS and pip.
 RUN apt update && export DEBIAN_FRONTEND=noninteractive && apt upgrade -y && pip3 install --upgrade pip
-
-# There are strict dependencies how to install the packages, and the requirements.txt file is in a specific order.
-RUN (cat /tmp/pip-tmp/requirements.txt | xargs -n 1 -L 1 sudo -u vscode pip3 --disable-pip-version-check --no-cache-dir install) && rm -rf /tmp/pip-tmp
-
-# Do the individual installers which have specific methods. 
-RUN sh /tmp/installers/chimera.sh && rm -rf /tmp/installers
-
+# If more packages needed add this line:
 # && apt-get -y install --no-install-recommends <your-package-list-here>
 
+# There are strict dependencies how to install the packages, and the requirements.txt file is in a
+# specific order.
+#
+# Note: for local dev env we install CPU only PyTorch, for deployments we need to use a different
+# requirements.txt which has CUDA extras. See: https://pytorch.org/get-started/locally/
+RUN (for line in $(cat /tmp/pip/requirements.txt); do \
+    sudo -u vscode pip3 --disable-pip-version-check --no-cache-dir install ${line}; \
+    done) && rm -rf /tmp/pip-tmp
+
+# Do the individual installers which have specific methods.
+RUN sh /tmp/installers/chimera.sh && rm -rf /tmp/installers

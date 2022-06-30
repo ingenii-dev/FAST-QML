@@ -1,10 +1,9 @@
---extra-index-url https://download.pytorch.org/whl/cu116
-pybel
-torch
+torch --extra-index-url https://download.pytorch.org/whl/cpu
+torchaudio --extra-index-url https://download.pytorch.org/whl/cpu
+torchvision --extra-index-url https://download.pytorch.org/whl/cpu
 torch-geometric
 torch-scatter
 torch-sparse
-torchaudio
-torchvision
 rdkit-pypi
+pybel
 mdms
