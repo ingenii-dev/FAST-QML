@@ -6,3 +6,5 @@ torch-scatter
 torch-sparse
 torchaudio
 torchvision
+rdkit-pypi
+mdms
