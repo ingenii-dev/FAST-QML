@@ -26,3 +26,6 @@ RUN (for line in $(cat /tmp/pip/requirements.txt); do \
 # Do the individual installers which have specific methods.
 COPY installers /tmp/installers/
 RUN sh /tmp/installers/chimera.sh && rm -rf /tmp/installers
+
+COPY installers /tmp/installers/
+RUN sh /tmp/installers/tfbio.sh && rm -rf /tmp/installers

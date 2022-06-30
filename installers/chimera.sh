@@ -7,18 +7,18 @@
 ###
 
 # Do all of this in the tmp folder.
-tmp_dir=/tmp/$$_chimera
+tmp_dir=/tmp/$$_installer
 echo "Creating temp directory ${tmp_dir}"
 mkdir ${tmp_dir}
 cd ${tmp_dir}
 
-CHIMERA_LINK="https://www.cgl.ucsf.edu$(curl -X POST -d "choice=Accept&file=linux_x86_64_osmesa%2Fchimera-1.16-linux_x86_64_osmesa.bin" -X POST https://www.cgl.ucsf.edu/chimera/cgi-bin/secure/chimera-get.py | grep "href=\"/chimera" | sed 's/.*"\(.*\)".*/\1/')"
+# Download the source, which comes as a zip.
+DOWNLOAD_LINK="https://www.cgl.ucsf.edu$(curl -X POST -d "choice=Accept&file=linux_x86_64_osmesa%2Fchimera-1.16-linux_x86_64_osmesa.bin" -X POST https://www.cgl.ucsf.edu/chimera/cgi-bin/secure/chimera-get.py | grep "href=\"/chimera" | sed 's/.*"\(.*\)".*/\1/')"
+echo "Downloading: ${DOWNLOAD_LINK}"
+curl ${DOWNLOAD_LINK} --output source.zip
 
-echo $CHIMERA_LINK
-
-curl $CHIMERA_LINK --output chimera_installer.bin
-
-unzip chimera_installer.bin
+# Unzip the source and run installer.
+unzip source.zip
 ./chimera.bin -q -d /opt/chimera
 ln -s /opt/chimera/bin/chimera /usr/local/bin
 

@@ -14,25 +14,22 @@
 
 path=$1
 
-
 # get list of pdb files from stdin and iterate over them. each instance of this script appends
 # its PID to the tmp.mol2 file in order to prevent race conditions, enabling this to be run with
 # gnu parallel
 
-        tmp_file=$$_tmp.mol2
+tmp_file=$$_tmp.mol2
 
-        echo "my tmp file is ${tmp_file}"
+echo "my tmp file is ${tmp_file}"
 
 cat $path | while read pdbfile; do
 
-                echo ${pdbfile}
-                mol2file=${pdbfile%pdb}mol2
-                # NOTICED THAT SOME INPUTS seem to never finish chimera step
-                echo -e "open ${pdbfile} \n addh \n addcharge \n write format mol2 0 $$_tmp.mol2 \n stop" | chimera --silent --nogui 
-                # Do not use TIP3P atom types, pybel cannot read them
-                sed 's/H\.t3p/H    /' ${tmp_file} | sed 's/O\.t3p/O\.3  /' > $mol2file
-
+        echo ${pdbfile}
+        mol2file=${pdbfile%pdb}mol2
+        # NOTICED THAT SOME INPUTS seem to never finish chimera step
+        echo -e "open ${pdbfile} \n addh \n addcharge \n write format mol2 0 $$_tmp.mol2 \n stop" | chimera --silent --nogui 
+        # Do not use TIP3P atom types, pybel cannot read them
+        sed 's/H\.t3p/H    /' ${tmp_file} | sed 's/O\.t3p/O\.3  /' > $mol2file
 
 done
 echo "finished processing"
-
