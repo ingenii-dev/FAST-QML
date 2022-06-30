@@ -2,20 +2,27 @@
 
 Predicting accurate protein-ligand binding affinity is important in drug discovery. This code implements fusion network model to benefit from Spatial Grach CNN and 3D CNN models to improve the binding affinity prediction. The code is written in python with Tensorflow and Pytorch.  
 
- 
-
 ## Getting Started
+
+1. Install locally [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+2. Install [Visual Studio Code](https://code.visualstudio.com/download), and clone this repo.
+3. There is a devcontainer setup which allows for running this code in a local Docker environment with all the required libraries preinstalled. Press F1 and search for the command "Remote-Containers: Rebuild and Reopen in Container" which will fetch the Docker Hub image:
+![Starting Docker devcontainer](./docs/assets/devcontainer-start.png)
+
+Few other tips:
+
+* The Dockerfile is what is pushed through GitHub workflow to be built and published on Docker Hub.
+* To override or add to the Docker Hub image with any changes *without* creating a new build, edit the `Dockerfile.local` file.
+* If you need to rebuild from scratch to ensure you're fetching the latest changes, use the "Without Cache" option when starting devcontainers.
 
 ### Prerequisites
 
-~~- Tensorflow 1.14 or higher~~
-- [PyTorch 1.4 or higher](https://pytorch.org)
-- [PyTorch Geometric Feature)](https://github.com/rusty1s/pytorch_geometric)
-- [rdkit](rdkit.org) (optional)
-- [pybel](https://github.com/pybel/pybel)  (optional)
-- [pdbfixer](https://github.com/openmm/pdbfixer)  (optional)
-- [tfbio](https://gitlab.com/cheminfIBB/tfbio)  (optional)
-
+* [PyTorch 1.4 or higher](https://pytorch.org)
+* [PyTorch Geometric Feature)](https://github.com/rusty1s/pytorch_geometric)
+* [rdkit](https://rdkit.org) (optional)
+* [pybel](https://github.com/pybel/pybel)  (optional)
+* [pdbfixer](https://github.com/openmm/pdbfixer)  (optional)
+* [tfbio](https://gitlab.com/cheminfIBB/tfbio)  (optional)
 
 ### Running the application
 
@@ -24,18 +31,16 @@ Predicting accurate protein-ligand binding affinity is important in drug discove
 The implemented networks use a 3D atomic representation as input data in a Hierarchical Data Format (HDF5). 
 Each complex/pocket data is comprised of a list of atoms with their features including 3D coordinates of the atoms (x, y, z) and associated features such as atomic number and charges. For more detail, please refer to the paper in the Citing LIST section.  
 
-
 #### 3D-CNN
 
 Note that the original 3D-CNN implementation used in the paper below has been moved to 3dcnn_tf. A new version using pytorch has been released in `model/3dcnn`
-
 
 ##### 3D-CNN tensorflow version (used in the paper)
 
 To train or test 3D-CNN, run `model/3dcnn_tf/main_3dcnn_pdbbind.py`. 
 Here is an example comand to test a pre-trained 3D-CNN model:
 
-```
+```bash
 python main_3dcnn_pdbbind.py --main-dir "pdbbind_3dcnn" --model-subdir "pdbbind2016_refined" --run-mode 5 --external-hdftype 3 --external-testhdf "eval_set.hdf" --external-featprefix "eval_3dcnn" --external-dir "pdbbind_2019"
 ```
 
@@ -53,19 +58,17 @@ example evaluation:
 
 Note that `model/3dcnn/data_reader.py` is a default data reader that reads our ML-HDF format described above. Please use your own data_reader to read your own format.
 
-
 #### SG-CNN
 
 To train or test SG-CNN, run `model/sgcnn/src/train.py` or `model/sgcnn/src/test.py`. 
 
 For an example training script, see `model/sgcnn/scripts/train_pybel_pdbbind_2016_general_refined.sh`
 
-
 #### Fusion
 
 To train or test fusion model, run `model/fusion/main_fusion_pdbbind.py`
 
-```
+```bash
 python main_fusion_pdbbind.py --main-dir "pdbbind_fusion" --fusionmodel-subdir "pdbbind2016_fusion" --run-mode 3 --external-csvfile "eval_3dcnn.csv" --external-3dcnn-featfile "eval_3dcnn_fc10.npy" --external-sgcnn-featfile "eval_sgcnn_feat.npy" --external-outprefix "eval_fusion" --external-dir "pdbbind_2019"
 ```
 
@@ -77,42 +80,33 @@ The checkpoint files for the models are made available under the Creative Common
 
 Note that the new 3dcnn checkpoint for pytorch (model_checkpoint_3dcnn.tgz) was trained on pdbbind 2019 refined dataset.  
 
-
 #### PDBSpheres evaluation set
 
 We make available the hold-out test set from the manuscript here: `sample_data/PDBSPHERES_EVAL_SET.csv`
-
 
 ## Contributing
 
 To contribute to FAST, please send us a pull request. When you send your request, make develop 
 the destination branch on the repository.
- 
-
 
 ## Versioning
 0.1
-
-
 
 ## Authors
 
 FAST was created by Hyojin Kim (hkim@llnl.gov), Derek Jones (jones289@llnl.gov), Jonathan Allen (allen99@llnl.gov). 
 
 ### Other contributors
+
 This project was supported by the American Heart Association (AHA) project (PI: Felice Lightstone). 
-
-
 
 ## Citing LIST
 
 If you need to reference FAST in a publication, please cite the following paper:
 
-
 Jones, D., Kim, H., Zhang, X., Zemla, A., Stevenson, G., Bennett, W. F. D., Kirshner, D., Wong, S. E., Lightstone, F. C., & Allen, J. E. (2021). Improved Protein-Ligand Binding Affinity Prediction with Structure-Based Deep Fusion Inference. Journal of Chemical Information and Modeling, 61(4), 1583–1592. https://doi.org/10.1021/acs.jcim.0c01306
 
-
-```
+```text
 @ARTICLE{Jones_Kim_improved_2021,
   title    = "Improved {Protein-Ligand} Binding Affinity Prediction with
               {Structure-Based} Deep Fusion Inference",
@@ -130,13 +124,11 @@ Jones, D., Kim, H., Zhang, X., Zemla, A., Stevenson, G., Bennett, W. F. D., Kirs
 
 ```
 
-
-
 ## License
+
 FAST is distributed under the terms of the MIT license. All new contributions must be made under this license. See LICENSE in this directory for the terms of the license.
 SPDX-License-Identifier: MIT
 LLNL-CODE-808183
 
 Checkpoint files are provided under [the Creative Commons BY 4.0 license](https://creativecommons.org/licenses/by/4.0/). See LICENSE-CC-BY in this directory for the terms of the license.  
 LLNL-MI-813373
-

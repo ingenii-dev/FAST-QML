@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 ################################################################################
 # Copyright 2019-2020 Lawrence Livermore National Security, LLC and other
 # Spack Project Developers. See the LICENSE file for details.

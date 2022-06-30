@@ -1,0 +1,9 @@
+torch --extra-index-url https://download.pytorch.org/whl/cpu
+torchaudio --extra-index-url https://download.pytorch.org/whl/cpu
+torchvision --extra-index-url https://download.pytorch.org/whl/cpu
+torch-geometric
+torch-scatter
+torch-sparse
+rdkit-pypi
+pybel
+mdms

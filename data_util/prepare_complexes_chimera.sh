@@ -14,7 +14,6 @@
 
 path=$1
 
-
 # get list of pdb files from stdin and iterate over them. each instance of this script appends
 # its PID to the tmp.mol2 file in order to prevent race conditions, enabling this to be run with
 # gnu parallel

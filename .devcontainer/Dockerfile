@@ -8,15 +8,21 @@ FROM mcr.microsoft.com/vscode/devcontainers/python:0-${VARIANT}
 ARG NODE_VERSION="none"
 RUN if [ "${NODE_VERSION}" != "none" ]; then su vscode -c "umask 0002 && . /usr/local/share/nvm/nvm.sh && nvm install ${NODE_VERSION} 2>&1"; fi
 
-# [Optional] If your pip requirements rarely change, uncomment this section to add them to the image.
-# COPY requirements.txt /tmp/pip-tmp/
-# RUN pip3 --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements.txt \
-#    && rm -rf /tmp/pip-tmp
+# Upgrade core OS and pip.
+RUN apt update && export DEBIAN_FRONTEND=noninteractive && apt upgrade -y && pip3 install --upgrade pip
+# If more packages needed add this line:
+# && apt-get -y install --no-install-recommends <your-package-list-here>
 
-# [Optional] Uncomment this section to install additional OS packages.
-RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu116
-    # && apt-get -y install --no-install-recommends <your-package-list-here>
+# There are strict dependencies how to install the packages, and the requirements.txt file is in a
+# specific order.
+#
+# Note: for local dev env we install CPU only PyTorch, for deployments we need to use a different
+# requirements.txt which has CUDA extras. See: https://pytorch.org/get-started/locally/
+COPY requirements.txt /tmp/pip/
+RUN (for line in $(cat /tmp/pip/requirements.txt); do \
+    sudo -u vscode pip3 --disable-pip-version-check --no-cache-dir install ${line}; \
+    done) && rm -rf /tmp/pip
 
-# [Optional] Uncomment this line to install global node packages.
-# RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && npm install -g <your-package-here>" 2>&1
+# Do the individual installers which have specific methods.
+COPY installers /tmp/installers/
+RUN sh /tmp/installers/chimera.sh && sh /tmp/installers/tfbio.sh && rm -rf /tmp/installers
