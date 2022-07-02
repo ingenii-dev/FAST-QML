@@ -7,3 +7,4 @@ torch-sparse
 rdkit-pypi
 pybel
 mdms
+openbabel

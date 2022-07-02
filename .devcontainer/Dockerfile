@@ -9,9 +9,10 @@ ARG NODE_VERSION="none"
 RUN if [ "${NODE_VERSION}" != "none" ]; then su vscode -c "umask 0002 && . /usr/local/share/nvm/nvm.sh && nvm install ${NODE_VERSION} 2>&1"; fi
 
 # Upgrade core OS and pip.
-RUN apt update && export DEBIAN_FRONTEND=noninteractive && apt upgrade -y && pip3 install --upgrade pip
-# If more packages needed add this line:
-# && apt-get -y install --no-install-recommends <your-package-list-here>
+RUN apt update && export DEBIAN_FRONTEND=noninteractive && apt upgrade -y \
+    && pip3 install --upgrade pip \
+    && apt-get -y install --no-install-recommends openbabel \
+    && ln -s /usr/include/openbabel3 /usr/local/include/openbabel3
 
 # There are strict dependencies how to install the packages, and the requirements.txt file is in a
 # specific order.
