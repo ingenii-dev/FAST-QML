@@ -3,3 +3,6 @@ general-set-except-refined
 __pycache__
 .ipynb_checkpoints/Untitled-checkpoint.ipynb
 data
+data_util/Instructions.txt
+data_util/ligand_mol2_files.csv
+data_util/pocket_mol2_files.csv
