@@ -7,4 +7,6 @@ torch-sparse
 rdkit-pypi
 pybel
 mdms
+pillow
 openbabel
+jupyterlab
