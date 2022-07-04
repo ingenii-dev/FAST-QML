@@ -11,7 +11,7 @@ RUN if [ "${NODE_VERSION}" != "none" ]; then su vscode -c "umask 0002 && . /usr/
 # Upgrade core OS and pip.
 RUN apt update && export DEBIAN_FRONTEND=noninteractive && apt upgrade -y \
     && pip3 install --upgrade pip \
-    && apt-get -y install --no-install-recommends openbabel \
+    && apt-get -y install --no-install-recommends swig libopenbabel-dev \
     && ln -s /usr/include/openbabel3 /usr/local/include/openbabel3
 
 # There are strict dependencies how to install the packages, and the requirements.txt file is in a
