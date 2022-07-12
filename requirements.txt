@@ -9,3 +9,4 @@ mdms
 pillow
 openbabel
 jupyterlab
+qiskit
