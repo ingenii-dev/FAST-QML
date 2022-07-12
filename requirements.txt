@@ -5,7 +5,6 @@ torch-geometric
 torch-scatter
 torch-sparse
 rdkit-pypi
-pybel
 mdms
 pillow
 openbabel

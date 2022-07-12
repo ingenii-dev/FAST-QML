@@ -10,7 +10,7 @@
 import os
 import sys
 import csv
-import h5py
+import h5py as h5
 import torch
 import numpy as np
 
@@ -33,7 +33,7 @@ class Dataset_MLHDF(Dataset):
 		self.max_atoms = max_atoms
 		self.feat_dim = feat_dim
 
-		self.mlhdf = h5py.File(self.mlhdf_path, 'r')
+		self.mlhdf = h5.File(self.mlhdf_path, 'r')
 		self.data_info_list = []
 		if self.mlhdf_ver == 1: # for fusion model
 			try:
@@ -42,11 +42,11 @@ class Dataset_MLHDF(Dataset):
 					next(csv_reader)
 					for row in csv_reader:
 						if float(row[2]) <= rmsd_thres:
-							self.data_info_list.append([row[0], row[1], float(row[2]), float(row[3])])
+							self.data_info_list.append([row[0], row[1], float(row[2])])
 			except IOError:
 				for comp_id in self.mlhdf.keys():
 					if self.is_crystal:
-						self.data_info_list.append([comp_id, 0, 0, 0])
+						self.data_info_list.append([comp_id, 0, 0])
 					else:
 						pose_ids = self.mlhdf[comp_id]["pybel"]["processed"]["docking"].keys()
 						for pose_id in pose_ids:
@@ -67,12 +67,11 @@ class Dataset_MLHDF(Dataset):
 		return count
 
 	def __getitem__(self, idx):
-		pdbid, poseid, rmsd, affinity = self.data_info_list[idx]
-
+		pdbid, poseid, affinity = self.data_info_list[idx]
 		data = np.zeros((self.max_atoms, self.feat_dim), dtype=np.float32)
 		if self.mlhdf_ver == 1:
 			if self.is_crystal:
-				mlhdf_ds = self.mlhdf[pdbid]["pybel"]["processed"]["crystal"]
+				mlhdf_ds = self.mlhdf[str(pdbid)]["pybel"]["processed"]['pdbbind']
 			else:
 				mlhdf_ds = self.mlhdf[pdbid]["pybel"]["processed"]["docking"][poseid]
 			actual_data = mlhdf_ds["data"][:]

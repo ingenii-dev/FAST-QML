@@ -6,3 +6,13 @@ data
 data_util/Instructions.txt
 data_util/ligand_mol2_files.csv
 data_util/pocket_mol2_files.csv
+CASF-2016
+core-set
+.ipynb_checkpoints/affinity_data-checkpoint.ipynb
+data_util/.ipynb_checkpoints/affinity_data-checkpoint.ipynb
+data_util/.ipynb_checkpoints/prepare_data-checkpoint.ipynb
+model/3dcnn/.ipynb_checkpoints/data_reader-checkpoint.py
+model/3dcnn/.ipynb_checkpoints/Load_data-checkpoint.ipynb
+model/3dcnn/.ipynb_checkpoints/main_train-checkpoint.py
+model/3dcnn/.ipynb_checkpoints/Untitled-checkpoint.ipynb
+model/3dcnn/.ipynb_checkpoints/Quantum_encoding-checkpoint.ipynb
