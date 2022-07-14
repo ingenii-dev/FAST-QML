@@ -10,3 +10,6 @@ pillow
 openbabel
 jupyterlab
 qiskit
+h5py
+matplotlib
+pylatexenc
